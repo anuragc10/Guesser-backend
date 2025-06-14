@@ -4,10 +4,11 @@ import com.guesser.demo.model.Guesser;
 import com.guesser.demo.repository.GameRepository;
 import com.guesser.demo.dto.GuessResponse;
 import com.guesser.demo.dto.StartGuesserResponse;
+import com.guesser.demo.exception.ErrorCodes;
+import com.guesser.demo.exception.GuesserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
 import java.util.Random;
 
 @Service
@@ -28,16 +29,14 @@ public class GuesserService {
     
     public GuessResponse submitGuess(String gameId, String guess) {
         if (gameId == null || gameId.trim().isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Game ID cannot be null or empty");
+            throw new GuesserException(ErrorCodes.INVALID_GAME_ID, HttpStatus.BAD_REQUEST);
         }
         
         Guesser game = gameRepository.findById(gameId)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, 
-                String.format("Game with ID '%s' not found. Please start a new game first.", gameId)));
+            .orElseThrow(() -> new GuesserException(ErrorCodes.GAME_NOT_FOUND, HttpStatus.NOT_FOUND, gameId));
             
         if (!"IN_PROGRESS".equals(game.getStatus())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, 
-                String.format("Game with ID '%s' is not in progress. Current status: %s", gameId, game.getStatus()));
+            throw new GuesserException(ErrorCodes.GAME_NOT_IN_PROGRESS, HttpStatus.BAD_REQUEST, gameId, game.getStatus());
         }
         
         validateGuess(guess);
@@ -77,13 +76,14 @@ public class GuesserService {
     }
     
     private void validateGuess(String guess) {
-        if (guess == null || guess.length() != NUMBER_LENGTH) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, 
-                "Please enter exactly 4 digits for your guess");
+        if (guess == null || guess.trim().isEmpty()) {
+            throw new GuesserException(ErrorCodes.INVALID_GUESS_NULL, HttpStatus.BAD_REQUEST);
+        }
+        if (guess.length() != NUMBER_LENGTH) {
+            throw new GuesserException(ErrorCodes.INVALID_GUESS_LENGTH, HttpStatus.BAD_REQUEST);
         }
         if (!guess.matches("\\d+")) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, 
-                "Your guess should contain only numbers (0-9)");
+            throw new GuesserException(ErrorCodes.INVALID_GUESS_FORMAT, HttpStatus.BAD_REQUEST);
         }
     }
     
