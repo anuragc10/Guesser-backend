@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GameResponse {
+public class GuessResponse {
     private String gameId;
     private int correctDigits;
     private int guessNumber;

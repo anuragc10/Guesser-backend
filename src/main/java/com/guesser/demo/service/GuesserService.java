@@ -1,9 +1,9 @@
 package com.guesser.demo.service;
 
-import com.guesser.demo.model.Game;
+import com.guesser.demo.model.Guesser;
 import com.guesser.demo.repository.GameRepository;
-import com.guesser.demo.dto.GameResponse;
-import com.guesser.demo.dto.StartGameResponse;
+import com.guesser.demo.dto.GuessResponse;
+import com.guesser.demo.dto.StartGuesserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.http.HttpStatus;
@@ -11,27 +11,27 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Random;
 
 @Service
-public class GameService {
+public class GuesserService {
     
     @Autowired
     private GameRepository gameRepository;
     
     private static final int NUMBER_LENGTH = 4;
-    private static final int MAX_GUESSES = 1;
+    private static final int MAX_GUESSES = 100;
     
-    public StartGameResponse startNewGame() {
-        Game game = new Game();
+    public StartGuesserResponse startNewGame() {
+        Guesser game = new Guesser();
         game.setSecretNumber(generateSecretNumber());
         game = gameRepository.save(game);
-        return new StartGameResponse(game.getGameId(), game.getStatus(), game.getSecretNumber());
+        return new StartGuesserResponse(game.getGameId(), game.getStatus(), game.getSecretNumber());
     }
     
-    public GameResponse submitGuess(String gameId, String guess) {
+    public GuessResponse submitGuess(String gameId, String guess) {
         if (gameId == null || gameId.trim().isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Game ID cannot be null or empty");
         }
         
-        Game game = gameRepository.findById(gameId)
+        Guesser game = gameRepository.findById(gameId)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, 
                 String.format("Game with ID '%s' not found. Please start a new game first.", gameId)));
             
@@ -57,7 +57,7 @@ public class GameService {
         
         int remainingAttempts = MAX_GUESSES - game.getGuessCount();
         
-        return new GameResponse(
+        return new GuessResponse(
             game.getGameId(),
             correctDigits,
             game.getGuessCount(),
