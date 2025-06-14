@@ -17,13 +17,13 @@ public class GameService {
     private GameRepository gameRepository;
     
     private static final int NUMBER_LENGTH = 4;
-    private static final int MAX_GUESSES = 100;
+    private static final int MAX_GUESSES = 1;
     
     public StartGameResponse startNewGame() {
         Game game = new Game();
         game.setSecretNumber(generateSecretNumber());
         game = gameRepository.save(game);
-        return new StartGameResponse(game.getGameId(), game.getStatus());
+        return new StartGameResponse(game.getGameId(), game.getStatus(), game.getSecretNumber());
     }
     
     public GameResponse submitGuess(String gameId, String guess) {
@@ -62,7 +62,6 @@ public class GameService {
             correctDigits,
             game.getGuessCount(),
             game.getStatus(),
-            game.getSecretNumber(),
             guess,
             remainingAttempts
         );

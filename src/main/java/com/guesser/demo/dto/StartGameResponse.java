@@ -10,4 +10,5 @@ import lombok.AllArgsConstructor;
 public class StartGameResponse {
     private String gameId;
     private String status;
+    private String secretNumber;
 } 

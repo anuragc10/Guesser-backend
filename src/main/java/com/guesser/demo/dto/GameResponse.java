@@ -12,7 +12,6 @@ public class GameResponse {
     private int correctDigits;
     private int guessNumber;
     private String status;
-    private String secretNumber;
     private String guessedNumber;
     private int remainingAttempts;
 } 
