@@ -4,12 +4,12 @@ import com.guesser.demo.model.Guesser;
 import com.guesser.demo.repository.GameRepository;
 import com.guesser.demo.dto.GuessResponse;
 import com.guesser.demo.dto.StartGuesserResponse;
+import com.guesser.demo.dto.StartGuesserRequest;
 import com.guesser.demo.exception.ErrorCodes;
 import com.guesser.demo.exception.GuesserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.http.HttpStatus;
-import java.util.Random;
 
 @Service
 public class GuesserService {
@@ -17,14 +17,19 @@ public class GuesserService {
     @Autowired
     private GameRepository gameRepository;
     
-    private static final int NUMBER_LENGTH = 4;
-    private static final int MAX_GUESSES = 100;
+    @Autowired
+    private GameLevelService gameLevelService;
     
-    public StartGuesserResponse startNewGame() {
+    public StartGuesserResponse startNewGame(StartGuesserRequest request) {
+        if (request == null) {
+            request = new StartGuesserRequest();
+        }
+        
         Guesser game = new Guesser();
-        game.setSecretNumber(generateSecretNumber());
+        game.setSecretNumber(gameLevelService.generateSecretNumber(request.getLevel()));
+        game.setLevel(request.getLevel());
         game = gameRepository.save(game);
-        return new StartGuesserResponse(game.getGameId(), game.getStatus(), game.getSecretNumber());
+        return new StartGuesserResponse(game.getGameId(), game.getStatus(), game.getSecretNumber(), game.getLevel());
     }
     
     public GuessResponse submitGuess(String gameId, String guess) {
@@ -39,22 +44,25 @@ public class GuesserService {
             throw new GuesserException(ErrorCodes.GAME_NOT_IN_PROGRESS, HttpStatus.BAD_REQUEST, gameId, game.getStatus());
         }
         
-        validateGuess(guess);
+        gameLevelService.validateGuess(guess, game.getLevel());
         
         int correctDigits = countCorrectDigits(game.getSecretNumber(), guess);
         game.setGuessCount(game.getGuessCount() + 1);
         
-        if (correctDigits == NUMBER_LENGTH) {
+        int numberLength = gameLevelService.getNumberLengthForLevel(game.getLevel());
+        int maxGuesses = gameLevelService.getMaxGuessesForLevel(game.getLevel());
+        
+        if (correctDigits == numberLength) {
             game.setStatus("SUCCESS");
             game.setEndTime(java.time.LocalDateTime.now());
-        } else if (game.getGuessCount() >= MAX_GUESSES) {
+        } else if (game.getGuessCount() >= maxGuesses) {
             game.setStatus("FAILED");
             game.setEndTime(java.time.LocalDateTime.now());
         }
         
         game = gameRepository.save(game);
         
-        int remainingAttempts = MAX_GUESSES - game.getGuessCount();
+        int remainingAttempts = maxGuesses - game.getGuessCount();
         
         return new GuessResponse(
             correctDigits,
@@ -65,30 +73,9 @@ public class GuesserService {
         );
     }
     
-    private String generateSecretNumber() {
-        Random random = new Random();
-        StringBuilder number = new StringBuilder();
-        for (int i = 0; i < NUMBER_LENGTH; i++) {
-            number.append(random.nextInt(10));
-        }
-        return number.toString();
-    }
-    
-    private void validateGuess(String guess) {
-        if (guess == null || guess.trim().isEmpty()) {
-            throw new GuesserException(ErrorCodes.INVALID_GUESS_NULL, HttpStatus.BAD_REQUEST);
-        }
-        if (guess.length() != NUMBER_LENGTH) {
-            throw new GuesserException(ErrorCodes.INVALID_GUESS_LENGTH, HttpStatus.BAD_REQUEST);
-        }
-        if (!guess.matches("\\d+")) {
-            throw new GuesserException(ErrorCodes.INVALID_GUESS_FORMAT, HttpStatus.BAD_REQUEST);
-        }
-    }
-    
     private int countCorrectDigits(String secret, String guess) {
         int count = 0;
-        for (int i = 0; i < NUMBER_LENGTH; i++) {
+        for (int i = 0; i < secret.length(); i++) {
             if (secret.charAt(i) == guess.charAt(i)) {
                 count++;
             }

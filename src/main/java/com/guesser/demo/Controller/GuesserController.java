@@ -1,8 +1,9 @@
-package com.guesser.demo.controller;
+package com.guesser.demo.Controller;
 
 import com.guesser.demo.dto.GuessRequest;
 import com.guesser.demo.dto.GuessResponse;
 import com.guesser.demo.dto.StartGuesserResponse;
+import com.guesser.demo.dto.StartGuesserRequest;
 import com.guesser.demo.service.GuesserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +18,8 @@ public class GuesserController {
     private GuesserService guesserService;
 
     @PostMapping("/start")
-    public ResponseEntity<StartGuesserResponse> startNewGame() {
-        return ResponseEntity.ok(guesserService.startNewGame());
+    public ResponseEntity<StartGuesserResponse> startNewGame(@RequestBody(required = false) StartGuesserRequest request) {
+        return ResponseEntity.ok(guesserService.startNewGame(request));
     }
 
     @PostMapping("/guess")

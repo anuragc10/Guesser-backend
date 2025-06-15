@@ -15,16 +15,17 @@ public class Guesser {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String gameId;
-    
     private String secretNumber;
     private int guessCount;
     private String status; // IN_PROGRESS, SUCCESS, FAILED
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    private int level;
     
     {
         this.startTime = LocalDateTime.now();
         this.status = "IN_PROGRESS";
         this.guessCount = 0;
+        this.level = 1;
     }
 } 

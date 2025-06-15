@@ -11,7 +11,7 @@ public enum ErrorCodes {
     
     // Input validation errors
     INVALID_GAME_ID("INPUT_001", "Game ID cannot be null or empty"),
-    INVALID_GUESS_LENGTH("INPUT_002", "Please enter exactly 4 digits for your guess"),
+    INVALID_GUESS_LENGTH("INPUT_002", "Digit count is not correct"),
     INVALID_GUESS_FORMAT("INPUT_003", "Your guess should contain only numbers (0-9)"),
     INVALID_GUESS_NULL("INPUT_004", "Guess cannot be null or empty"),
     

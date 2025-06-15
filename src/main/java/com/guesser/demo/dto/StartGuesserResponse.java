@@ -11,4 +11,5 @@ public class StartGuesserResponse {
     private String gameId;
     private String status;
     private String secretNumber;
+    private int level;
 } 
