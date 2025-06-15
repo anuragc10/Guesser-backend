@@ -1,15 +1,20 @@
 package com.guesser.demo.service;
 
 import com.guesser.demo.model.Guesser;
+import com.guesser.demo.model.GuessHistory;
 import com.guesser.demo.repository.GameRepository;
+import com.guesser.demo.repository.GuessHistoryRepository;
 import com.guesser.demo.dto.GuessResponse;
 import com.guesser.demo.dto.StartGuesserResponse;
 import com.guesser.demo.dto.StartGuesserRequest;
+import com.guesser.demo.dto.GuessHistoryResponse;
 import com.guesser.demo.exception.ErrorCodes;
 import com.guesser.demo.exception.GuesserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.http.HttpStatus;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class GuesserService {
@@ -19,6 +24,9 @@ public class GuesserService {
     
     @Autowired
     private GameLevelService gameLevelService;
+    
+    @Autowired
+    private GuessHistoryRepository guessHistoryRepository;
     
     public StartGuesserResponse startNewGame(StartGuesserRequest request) {
         if (request == null) {
@@ -49,6 +57,10 @@ public class GuesserService {
         int correctDigits = countCorrectDigits(game.getSecretNumber(), guess);
         game.setGuessCount(game.getGuessCount() + 1);
         
+        // Store guess history
+        GuessHistory guessHistory = new GuessHistory(game, guess, correctDigits);
+        guessHistoryRepository.save(guessHistory);
+        
         int numberLength = gameLevelService.getNumberLengthForLevel(game.getLevel());
         int maxGuesses = gameLevelService.getMaxGuessesForLevel(game.getLevel());
         
@@ -71,6 +83,24 @@ public class GuesserService {
             guess,
             remainingAttempts
         );
+    }
+    
+    public List<GuessHistoryResponse> getGuessHistory(String gameId) {
+        if (gameId == null || gameId.trim().isEmpty()) {
+            throw new GuesserException(ErrorCodes.INVALID_GAME_ID, HttpStatus.BAD_REQUEST);
+        }
+        
+        Guesser game = gameRepository.findById(gameId)
+            .orElseThrow(() -> new GuesserException(ErrorCodes.GAME_NOT_FOUND, HttpStatus.NOT_FOUND, gameId));
+            
+        return guessHistoryRepository.findByGameGameIdOrderByGuessTimeDesc(gameId)
+            .stream()
+            .map(history -> new GuessHistoryResponse(
+                history.getGuessedNumber(),
+                history.getCorrectDigits(),
+                history.getGuessTime()
+            ))
+            .collect(Collectors.toList());
     }
     
     private int countCorrectDigits(String secret, String guess) {
