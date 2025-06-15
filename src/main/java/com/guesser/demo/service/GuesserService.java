@@ -57,7 +57,6 @@ public class GuesserService {
         int remainingAttempts = MAX_GUESSES - game.getGuessCount();
         
         return new GuessResponse(
-            game.getGameId(),
             correctDigits,
             game.getGuessCount(),
             game.getStatus(),

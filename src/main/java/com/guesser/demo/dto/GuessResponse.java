@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GuessResponse {
-    private String gameId;
     private int correctDigits;
     private int guessNumber;
     private String status;
