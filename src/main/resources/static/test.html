@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Game Test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .controls {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        input, textarea {
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        textarea {
+            width: 100%;
+            min-height: 60px;
+            font-family: monospace;
+        }
+        #messages {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .message {
+            margin: 5px 0;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .success {
+            color: #4CAF50;
+        }
+        .error {
+            color: #f44336;
+        }
+        pre {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h2>Number Guessing Game - WebSocket Test</h2>
+    
+    <div class="controls">
+        <h3>Game Controls</h3>
+        <label for="startJson">Start Game JSON:</label>
+        <textarea id="startJson">{
+    "gameMode": "00ff00",
+    "playerId": "player1",
+    "level": 1
+}</textarea>
+        <button onclick="startGame()">Start New Game</button>
+        <br><br>
+        <label for="guessInput">Your Guess:</label>
+        <input type="text" id="guessInput" placeholder="Enter your guess">
+        <button onclick="submitGuess()">Submit Guess</button>
+    </div>
+
+    <div id="messages">
+        <h3>Game Messages</h3>
+        <div id="messageContainer"></div>
+    </div>
+
+    <script>
+        let stompClient = null;
+        let gameId = null;
+        let playerId = null;
+        let guessSubscription = null;
+
+        function connect() {
+            const socket = new SockJS('http://localhost:8080/ws');
+            stompClient = Stomp.over(socket);
+
+            stompClient.connect({}, function(frame) {
+                addMessage('Connected to WebSocket server', 'success');
+
+                stompClient.subscribe('/topic/game', function(response) {
+                    const gameData = JSON.parse(response.body);
+                    gameId = gameData.gameId;
+                    playerId = gameData.playerId;
+                    console.log("playerId: " + playerId);
+                    addJsonMessage('Game started response:', gameData);
+
+                    if (guessSubscription) {
+                        guessSubscription.unsubscribe();
+                    }
+                    guessSubscription = stompClient.subscribe('/topic/game/' + gameId, function(response) {
+                        const guessResponse = JSON.parse(response.body);
+                        addJsonMessage('Guess response:', guessResponse);
+                    });
+                });
+            }, function(error) {
+                addMessage('Connection error: ' + error, 'error');
+            });
+        }
+
+        function startGame() {
+            if (!stompClient) {
+                connect();
+            }
+            let jsonStr = document.getElementById('startJson').value;
+            let jsonObj;
+            try {
+                jsonObj = JSON.parse(jsonStr);
+            } catch (e) {
+                addMessage('Invalid JSON: ' + e.message, 'error');
+                return;
+            }
+            addMessage('Starting new game with: ' + JSON.stringify(jsonObj), 'success');
+            stompClient.send("/app/game/start", {}, JSON.stringify(jsonObj));
+        }
+
+        function submitGuess() {
+            if (!gameId) {
+                addMessage('Please start a game first', 'error');
+                return;
+            }
+            const guess = document.getElementById('guessInput').value;
+            if (!guess) {
+                addMessage('Please enter a guess', 'error');
+                return;
+            }
+            const jsonObj = {
+                guess: guess
+            };
+            addMessage('Submitting guess: ' + guess, 'success');
+            stompClient.send("/app/game/guess",  { "X-Game-ID": gameId, "X-Player-ID": playerId }, JSON.stringify(jsonObj));
+            document.getElementById('guessInput').value = '';
+        }
+
+        function addMessage(message, type) {
+            const messageContainer = document.getElementById('messageContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message ' + type;
+            messageDiv.textContent = message;
+            messageContainer.insertBefore(messageDiv, messageContainer.firstChild);
+        }
+
+        function addJsonMessage(label, jsonObj) {
+            const messageContainer = document.getElementById('messageContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message success';
+            const labelDiv = document.createElement('div');
+            labelDiv.textContent = label;
+            const pre = document.createElement('pre');
+            pre.textContent = JSON.stringify(jsonObj, null, 2);
+            messageDiv.appendChild(labelDiv);
+            messageDiv.appendChild(pre);
+            messageContainer.insertBefore(messageDiv, messageContainer.firstChild);
+        }
+
+        window.onload = function() {
+            connect();
+        };
+    </script>
+</body>
+</html> 

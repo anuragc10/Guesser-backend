@@ -27,8 +27,9 @@ public class GuesserController {
     @PostMapping("/guess")
     public ResponseEntity<GuessResponse> submitGuess(
             @RequestHeader("X-Game-ID") String gameId,
+            @RequestHeader("X-Player-ID") String playerId,
             @RequestBody GuessRequest request) {
-        return ResponseEntity.ok(guesserService.submitGuess(gameId, request.getGuess()));
+        return ResponseEntity.ok(guesserService.submitGuess(gameId, request.getGuess(), playerId));
     }
     
     @GetMapping("/history")

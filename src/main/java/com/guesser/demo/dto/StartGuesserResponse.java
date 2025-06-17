@@ -12,4 +12,8 @@ public class StartGuesserResponse {
     private String status;
     private String secretNumber;
     private int level;
+    private String gameMode; // SINGLE_PLAYER or MULTIPLAYER
+    private String playerId;
+    private String roomId;
+
 } 

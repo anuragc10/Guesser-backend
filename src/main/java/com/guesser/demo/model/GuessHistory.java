@@ -25,6 +25,7 @@ public class GuessHistory {
     private String guessedNumber;
     private int correctDigits;
     private LocalDateTime guessTime;
+    private String playerId;
     
     public GuessHistory(Guesser game, String guessedNumber, int correctDigits) {
         this.game = game;

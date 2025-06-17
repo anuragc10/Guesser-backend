@@ -1,0 +1,50 @@
+2025-06-18T01:37:46.973+05:30  INFO 44711 --- [demo] [restartedMain] com.guesser.demo.MainApplication         : Starting MainApplication using Java 17.0.15 with PID 44711 (/Users/anuragsingh/Documents/project/Guess-The-Number/target/classes started by anuragsingh in /Users/anuragsingh/Documents/project/Guess-The-Number)
+2025-06-18T01:37:46.975+05:30 DEBUG 44711 --- [demo] [restartedMain] com.guesser.demo.MainApplication         : Running with Spring Boot v3.2.3, Spring v6.1.4
+2025-06-18T01:37:46.975+05:30  INFO 44711 --- [demo] [restartedMain] com.guesser.demo.MainApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-06-18T01:37:46.996+05:30  INFO 44711 --- [demo] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-06-18T01:37:46.997+05:30  INFO 44711 --- [demo] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-06-18T01:37:47.299+05:30  INFO 44711 --- [demo] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-18T01:37:47.324+05:30  INFO 44711 --- [demo] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 22 ms. Found 3 JPA repository interfaces.
+2025-06-18T01:37:47.582+05:30  INFO 44711 --- [demo] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-06-18T01:37:47.587+05:30  INFO 44711 --- [demo] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-06-18T01:37:47.587+05:30  INFO 44711 --- [demo] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2025-06-18T01:37:47.606+05:30  INFO 44711 --- [demo] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-06-18T01:37:47.607+05:30  INFO 44711 --- [demo] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 610 ms
+2025-06-18T01:37:47.622+05:30  INFO 44711 --- [demo] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-06-18T01:37:47.696+05:30  INFO 44711 --- [demo] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2025-06-18T01:37:47.697+05:30  INFO 44711 --- [demo] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-06-18T01:37:47.704+05:30  INFO 44711 --- [demo] [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2025-06-18T01:37:47.757+05:30  INFO 44711 --- [demo] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-18T01:37:47.778+05:30  INFO 44711 --- [demo] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2025-06-18T01:37:47.790+05:30  INFO 44711 --- [demo] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-06-18T01:37:47.890+05:30  INFO 44711 --- [demo] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-18T01:37:47.909+05:30  WARN 44711 --- [demo] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-06-18T01:37:48.270+05:30  INFO 44711 --- [demo] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-18T01:37:48.297+05:30  INFO 44711 --- [demo] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-18T01:37:52.714+05:30  INFO 44711 --- [demo] [restartedMain] com.guesser.demo.config.LoggingConfig    : Created logs directory at: /Users/anuragsingh/Documents/project/Guess-The-Number/logs
+2025-06-18T01:37:52.785+05:30  WARN 44711 --- [demo] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-18T01:37:52.941+05:30  INFO 44711 --- [demo] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-06-18T01:37:52.958+05:30  INFO 44711 --- [demo] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2025-06-18T01:37:52.959+05:30  INFO 44711 --- [demo] [restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : Starting...
+2025-06-18T01:37:52.960+05:30  INFO 44711 --- [demo] [restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@639fdfe6]]
+2025-06-18T01:37:52.960+05:30  INFO 44711 --- [demo] [restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : Started.
+2025-06-18T01:37:52.965+05:30  INFO 44711 --- [demo] [restartedMain] com.guesser.demo.MainApplication         : Started MainApplication in 6.225 seconds (process running for 6.657)
+2025-06-18T01:37:55.914+05:30  INFO 44711 --- [demo] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-06-18T01:37:55.915+05:30  INFO 44711 --- [demo] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-06-18T01:37:55.917+05:30  INFO 44711 --- [demo] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2025-06-18T01:37:55.976+05:30  INFO 44711 --- [demo] [http-nio-8080-exec-1] c.g.d.service.game.MultiplayerStrategy   : Player player2 attempting to start a multiplayer game
+2025-06-18T01:37:56.058+05:30  INFO 44711 --- [demo] [http-nio-8080-exec-1] c.g.d.service.game.MultiplayerStrategy   : Created new room 2b574f6e-33a3-4d62-8c8a-bf69b02f84c1 for player player2
+2025-06-18T01:37:56.058+05:30  INFO 44711 --- [demo] [http-nio-8080-exec-1] c.g.d.service.game.MultiplayerStrategy   : Player player2 is the first player in room 2b574f6e-33a3-4d62-8c8a-bf69b02f84c1
+2025-06-18T01:37:56.088+05:30  INFO 44711 --- [demo] [http-nio-8080-exec-1] c.g.d.service.game.MultiplayerStrategy   : Game started for player player2 in room 2b574f6e-33a3-4d62-8c8a-bf69b02f84c1 with status IN_PROGRESS
+2025-06-18T01:38:03.737+05:30  INFO 44711 --- [demo] [http-nio-8080-exec-3] c.g.d.service.game.MultiplayerStrategy   : Player player2 attempting to start a multiplayer game
+2025-06-18T01:38:03.770+05:30  WARN 44711 --- [demo] [http-nio-8080-exec-3] c.g.d.service.game.MultiplayerStrategy   : Player player2 is already in room 2b574f6e-33a3-4d62-8c8a-bf69b02f84c1
+2025-06-18T01:38:03.782+05:30  WARN 44711 --- [demo] [http-nio-8080-exec-3] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [com.guesser.demo.exception.GuesserException: Player is already in room '2b574f6e-33a3-4d62-8c8a-bf69b02f84c1' with game ID '10f7e717-9563-4c64-b6da-9d5b4845eb20']
+2025-06-18T01:38:52.987+05:30  INFO 44711 --- [demo] [MessageBroker-1] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 1, active threads = 1, queued tasks = 0, completed tasks = 0]
+2025-06-18T01:39:41.155+05:30  INFO 44711 --- [demo] [Thread-4] com.guesser.demo.config.LoggingConfig    : Application shutting down, flushing logs...
+2025-06-18T01:39:41.162+05:30  INFO 44711 --- [demo] [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : Stopping...
+2025-06-18T01:39:41.163+05:30  INFO 44711 --- [demo] [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@639fdfe6]]
+2025-06-18T01:39:41.163+05:30  INFO 44711 --- [demo] [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : Stopped.
+2025-06-18T01:39:41.177+05:30  INFO 44711 --- [demo] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-18T01:39:41.184+05:30  WARN 44711 --- [demo] [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-224]
+2025-06-18T01:39:41.185+05:30  INFO 44711 --- [demo] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-06-18T01:39:41.188+05:30  INFO 44711 --- [demo] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

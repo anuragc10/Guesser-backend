@@ -12,4 +12,5 @@ public class GuessHistoryResponse {
     private String guessedNumber;
     private int correctDigits;
     private LocalDateTime guessTime;
+    private String playerId;
 }
