@@ -14,4 +14,5 @@ public interface GameRepository extends JpaRepository<Guesser, String> {
     Optional<Guesser> findByRoomAndPlayerId(GameRoom room, String playerId);
     boolean existsByPlayerId(String playerId);
     Optional<Guesser> findByPlayerId(String playerId);
+    boolean existsByPlayerIdAndStatus(String playerId, String status);
 } 

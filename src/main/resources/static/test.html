@@ -150,10 +150,12 @@
                 return;
             }
             const jsonObj = {
-                guess: guess
+                gameId: gameId,
+                guess: guess,
+                playerId: playerId
             };
             addMessage('Submitting guess: ' + guess, 'success');
-            stompClient.send("/app/game/guess",  { "X-Game-ID": gameId, "X-Player-ID": playerId }, JSON.stringify(jsonObj));
+            stompClient.send("/app/game/guess",  {}, JSON.stringify(jsonObj));
             document.getElementById('guessInput').value = '';
         }
 

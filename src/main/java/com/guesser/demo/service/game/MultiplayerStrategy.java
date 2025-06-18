@@ -41,17 +41,14 @@ public class MultiplayerStrategy implements GameStrategy {
     public StartGuesserResponse startGame(StartGuesserRequest request) {
         logger.info(GameConstants.LOG_PLAYER_STARTING, request.getPlayerId());
         
-        // Check if player is already in any room
-        if (gameRepository.existsByPlayerId(request.getPlayerId())) {
+        // Check if player is already in any active game
+        if (gameRepository.existsByPlayerIdAndStatus(request.getPlayerId(), GameConstants.STATUS_IN_PROGRESS)) {
             Guesser existingGame = gameRepository.findByPlayerId(request.getPlayerId())
                 .orElseThrow(() -> new GuesserException(ErrorCodes.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR));
             
-            // Only prevent starting new game if the existing game is still in progress
-            if (GameConstants.STATUS_IN_PROGRESS.equals(existingGame.getStatus())) {
-                logger.warn(GameConstants.LOG_PLAYER_ALREADY_IN_ROOM, request.getPlayerId(), existingGame.getRoom().getRoomId());
-                throw new GuesserException(ErrorCodes.PLAYER_ALREADY_IN_ROOM, HttpStatus.BAD_REQUEST, 
-                    existingGame.getRoom().getRoomId(), existingGame.getGameId());
-            }
+            logger.warn(GameConstants.LOG_PLAYER_ALREADY_IN_ROOM, request.getPlayerId(), existingGame.getRoom().getRoomId());
+            throw new GuesserException(ErrorCodes.PLAYER_ALREADY_IN_ROOM, HttpStatus.BAD_REQUEST, 
+                existingGame.getRoom().getRoomId(), existingGame.getGameId());
         }
 
         GameRoom room;

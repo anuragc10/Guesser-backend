@@ -30,15 +30,13 @@ public class WebSocketGameController {
 
     @MessageMapping("/game/guess")
     public void submitGuess(
-            @Header("X-Game-ID") String gameId,
-            @Header("X-Player-ID") String playerId,
             @Payload GuessRequest request
     ) {
         GuessResponse response = guesserService.submitGuess(
-                gameId,
+                request.getGameId(),
                 request.getGuess(),
-                playerId
+                request.getPlayerId()
         );
-        messagingTemplate.convertAndSend("/topic/game/" + gameId, response);
+        messagingTemplate.convertAndSend("/topic/game/" + request.getGameId(), response);
     }
 } 
