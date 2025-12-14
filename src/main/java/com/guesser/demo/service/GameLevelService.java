@@ -69,4 +69,29 @@ public class GameLevelService {
             );
         }
     }
+    
+    public void validateSecretNumber(String secretNumber, int level) {
+        if (secretNumber == null || secretNumber.trim().isEmpty()) {
+            throw new com.guesser.demo.exception.GuesserException(
+                com.guesser.demo.exception.ErrorCodes.INVALID_SECRET_NUMBER_NULL, 
+                org.springframework.http.HttpStatus.BAD_REQUEST
+            );
+        }
+        
+        int requiredLength = getNumberLengthForLevel(level);
+        if (secretNumber.length() != requiredLength) {
+            throw new com.guesser.demo.exception.GuesserException(
+                com.guesser.demo.exception.ErrorCodes.INVALID_SECRET_NUMBER_LENGTH, 
+                org.springframework.http.HttpStatus.BAD_REQUEST,
+                level, requiredLength
+            );
+        }
+        
+        if (!secretNumber.matches("\\d+")) {
+            throw new com.guesser.demo.exception.GuesserException(
+                com.guesser.demo.exception.ErrorCodes.INVALID_SECRET_NUMBER_FORMAT, 
+                org.springframework.http.HttpStatus.BAD_REQUEST
+            );
+        }
+    }
 } 

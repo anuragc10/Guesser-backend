@@ -8,4 +8,5 @@ import java.util.Optional;
 @Repository
 public interface GameRoomRepository extends JpaRepository<GameRoom, String> {
     Optional<GameRoom> findByStatusAndPlayer2IdIsNull(String status);
+    Optional<GameRoom> findByStatusAndPlayer2IdIsNullAndLevel(String status, int level);
 } 

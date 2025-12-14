@@ -31,9 +31,18 @@ public class SinglePlayerStrategy implements GameStrategy {
     public StartGuesserResponse startGame(StartGuesserRequest request) {
         logger.info(GameConstants.LOG_SINGLE_PLAYER_STARTING, request.getPlayerId());
 
-        // Generate a secret number based on the level
-        String secretNumber = gameLevelService.generateSecretNumber(request.getLevel());
-        logger.info("Generated secret number for level {}: {}", request.getLevel(), secretNumber);
+        // Generate or validate secret number based on the level
+        String secretNumber;
+        if (request.getSecretNumber() != null && !request.getSecretNumber().trim().isEmpty()) {
+            // Validate provided secret number
+            gameLevelService.validateSecretNumber(request.getSecretNumber(), request.getLevel());
+            secretNumber = request.getSecretNumber();
+            logger.info("Using provided secret number for level {}: {}", request.getLevel(), secretNumber);
+        } else {
+            // Generate a secret number based on the level
+            secretNumber = gameLevelService.generateSecretNumber(request.getLevel());
+            logger.info("Generated secret number for level {}: {}", request.getLevel(), secretNumber);
+        }
 
         Guesser game = new Guesser();
         game.setPlayerId(request.getPlayerId());

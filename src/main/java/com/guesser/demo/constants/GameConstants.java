@@ -2,8 +2,8 @@ package com.guesser.demo.constants;
 
 public final class GameConstants {
     // Game Modes
-    public static final String SINGLE_PLAYER = "00ff00";
-    public static final String MULTIPLAYER = "0000ff";
+    public static final String SINGLE_PLAYER = "SINGLE_PLAYER";
+    public static final String MULTIPLAYER = "MULTIPLAYER";
 
     // Game Status
     public static final String STATUS_IN_PROGRESS = "IN_PROGRESS";

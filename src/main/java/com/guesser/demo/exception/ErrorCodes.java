@@ -25,6 +25,9 @@ public enum ErrorCodes {
     INVALID_GUESS_LENGTH("INPUT_002", "Digit count is not correct"),
     INVALID_GUESS_FORMAT("INPUT_003", "Your guess should contain only numbers (0-9)"),
     INVALID_GUESS_NULL("INPUT_004", "Guess cannot be null or empty"),
+    INVALID_SECRET_NUMBER_LENGTH("INPUT_005", "Secret number length does not match level. Level %d requires %d digits."),
+    INVALID_SECRET_NUMBER_FORMAT("INPUT_006", "Secret number should contain only numbers (0-9)"),
+    INVALID_SECRET_NUMBER_NULL("INPUT_007", "Secret number cannot be null or empty"),
     
     // System errors
     INTERNAL_SERVER_ERROR("SYS_001", "An internal server error occurred. Please try again later");

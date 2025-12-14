@@ -1,4 +1,4 @@
-package com.guesser.demo.controller;
+package com.guesser.demo.Controller;
 
 import com.guesser.demo.dto.StartGuesserRequest;
 import com.guesser.demo.dto.StartGuesserResponse;
@@ -39,4 +39,4 @@ public class WebSocketGameController {
         );
         messagingTemplate.convertAndSend("/topic/game/" + request.getGameId(), response);
     }
-} 
+}

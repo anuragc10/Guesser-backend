@@ -1,10 +1,6 @@
 package com.guesser.demo.Controller;
 
-import com.guesser.demo.dto.GuessRequest;
-import com.guesser.demo.dto.GuessResponse;
-import com.guesser.demo.dto.StartGuesserResponse;
-import com.guesser.demo.dto.StartGuesserRequest;
-import com.guesser.demo.dto.GuessHistoryResponse;
+import com.guesser.demo.dto.*;
 import com.guesser.demo.service.GuesserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,15 +22,18 @@ public class GuesserController {
 
     @PostMapping("/guess")
     public ResponseEntity<GuessResponse> submitGuess(
-            @RequestHeader("X-Game-ID") String gameId,
-            @RequestHeader("X-Player-ID") String playerId,
             @RequestBody GuessRequest request) {
-        return ResponseEntity.ok(guesserService.submitGuess(gameId, request.getGuess(), playerId));
+        return ResponseEntity.ok(guesserService.submitGuess(request.getGameId(), request.getGuess(), request.getPlayerId()));
     }
     
     @GetMapping("/history")
     public ResponseEntity<List<GuessHistoryResponse>> getGuessHistory(
-            @RequestHeader("X-Game-ID") String gameId) {
-        return ResponseEntity.ok(guesserService.getGuessHistory(gameId));
+            @RequestBody GuessHistoryRequest request) {
+        return ResponseEntity.ok(guesserService.getGuessHistory(request.getGameId()));
+    }
+    
+    @PostMapping("/end")
+    public ResponseEntity<EndGameResponse> endGame(@RequestBody EndGameRequest request) {
+        return ResponseEntity.ok(guesserService.endGame(request));
     }
 } 

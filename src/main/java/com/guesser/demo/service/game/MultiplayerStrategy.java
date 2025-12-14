@@ -43,7 +43,7 @@ public class MultiplayerStrategy implements GameStrategy {
         
         // Check if player is already in any active game
         if (gameRepository.existsByPlayerIdAndStatus(request.getPlayerId(), GameConstants.STATUS_IN_PROGRESS)) {
-            Guesser existingGame = gameRepository.findByPlayerId(request.getPlayerId())
+            Guesser existingGame = gameRepository.findByPlayerIdAndStatus(request.getPlayerId(), GameConstants.STATUS_IN_PROGRESS)
                 .orElseThrow(() -> new GuesserException(ErrorCodes.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR));
             
             logger.warn(GameConstants.LOG_PLAYER_ALREADY_IN_ROOM, request.getPlayerId(), existingGame.getRoom().getRoomId());
@@ -70,21 +70,29 @@ public class MultiplayerStrategy implements GameStrategy {
                 throw new GuesserException(ErrorCodes.ROOM_NOT_AVAILABLE, HttpStatus.BAD_REQUEST);
             }
             
+            // Check if levels match
+            if (room.getLevel() != request.getLevel()) {
+                logger.warn("Player {} attempted to join room {} with different level. Room level: {}, Player level: {}", 
+                    request.getPlayerId(), room.getRoomId(), room.getLevel(), request.getLevel());
+                throw new GuesserException(ErrorCodes.ROOM_NOT_AVAILABLE, HttpStatus.BAD_REQUEST);
+            }
+            
             logger.info(GameConstants.LOG_ROOM_FOUND, room.getRoomId(), request.getPlayerId(), room.getPlayer1Id());
             room.setPlayer2Id(request.getPlayerId());
             room.setStatus(GameConstants.ROOM_STATUS_IN_PROGRESS);
         } else {
-            // Try to find a room with one player waiting
-            Optional<GameRoom> availableRoom = gameRoomRepository.findByStatusAndPlayer2IdIsNull(GameConstants.ROOM_STATUS_WAITING);
+            // Try to find a room with one player waiting AND matching level
+            Optional<GameRoom> availableRoom = gameRoomRepository.findByStatusAndPlayer2IdIsNullAndLevel(
+                GameConstants.ROOM_STATUS_WAITING, request.getLevel());
             
             if (availableRoom.isPresent()) {
-                // Join existing room
+                // Join existing room with matching level
                 room = availableRoom.get();
                 logger.info(GameConstants.LOG_ROOM_FOUND, room.getRoomId(), request.getPlayerId(), room.getPlayer1Id());
                 room.setPlayer2Id(request.getPlayerId());
                 room.setStatus(GameConstants.ROOM_STATUS_IN_PROGRESS);
             } else {
-                // Create new room
+                // Create new room with the requested level
                 room = new GameRoom();
                 room.setRoomId(java.util.UUID.randomUUID().toString());
                 room.setPlayer1Id(request.getPlayerId());
@@ -95,11 +103,23 @@ public class MultiplayerStrategy implements GameStrategy {
         }
         
         // Create player's game
+        // Use room level to ensure consistency (room level is set when room is created or validated when joining)
+        int gameLevel = room.getLevel();
+        
+        // Validate secret number if provided
+        String secretNumber;
+        if (request.getSecretNumber() != null && !request.getSecretNumber().trim().isEmpty()) {
+            gameLevelService.validateSecretNumber(request.getSecretNumber(), gameLevel);
+            secretNumber = request.getSecretNumber();
+        } else {
+            secretNumber = gameLevelService.generateSecretNumber(gameLevel);
+        }
+        
         Guesser game = new Guesser();
         game.setRoom(room);
         game.setPlayerId(request.getPlayerId());
-        game.setSecretNumber(request.getSecretNumber() == null ? gameLevelService.generateSecretNumber(request.getLevel()) : request.getSecretNumber());
-        game.setLevel(request.getLevel());
+        game.setSecretNumber(secretNumber);
+        game.setLevel(gameLevel);
         game.setGameMode(GameConstants.MULTIPLAYER);
         
         // Set current player if this is the first player
