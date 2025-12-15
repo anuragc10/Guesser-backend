@@ -15,5 +15,10 @@ public class StartGuesserResponse {
     private String gameMode; // SINGLE_PLAYER or MULTIPLAYER
     private String playerId;
     private String roomId;
+    private String roomStatus; // WAITING_FOR_PLAYER, IN_PROGRESS, COMPLETED
+    private String currentPlayerId; // Player whose turn it is
+    private Boolean limitAttempts; // Whether attempts are limited
+    private Integer remainingAttempts; // Remaining attempts if limited
+    private Integer maxGuesses; // Max guesses allowed if limited
 
 } 

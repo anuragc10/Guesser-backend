@@ -25,7 +25,10 @@ public class GameLevelService {
         }
     }
     
-    public int getMaxGuessesForLevel(int level) {
+    public int getMaxGuessesForLevel(int level, boolean limitAttempts) {
+        if (!limitAttempts) {
+            return Integer.MAX_VALUE;
+        }
         switch (level) {
             case 1:
                 return LEVEL_1_MAX_GUESSES;
@@ -36,6 +39,13 @@ public class GameLevelService {
             default:
                 return LEVEL_1_MAX_GUESSES;
         }
+    }
+    
+    public Integer getRemainingAttempts(int level, int guessCount, boolean limitAttempts) {
+        if (!limitAttempts) {
+            return null; // Unlimited attempts
+        }
+        return getMaxGuessesForLevel(level, true) - guessCount;
     }
     
     public String generateSecretNumber(int level) {

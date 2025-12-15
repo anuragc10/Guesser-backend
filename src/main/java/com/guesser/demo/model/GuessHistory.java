@@ -22,6 +22,8 @@ public class GuessHistory {
     @JoinColumn(name = "game_id")
     private Guesser game;
     
+    private String roomId; // Room ID for multiplayer games
+    
     private String guessedNumber;
     private int correctDigits;
     private LocalDateTime guessTime;
@@ -32,5 +34,9 @@ public class GuessHistory {
         this.guessedNumber = guessedNumber;
         this.correctDigits = correctDigits;
         this.guessTime = LocalDateTime.now();
+        // Set roomId if game has a room (multiplayer)
+        if (game.getRoom() != null) {
+            this.roomId = game.getRoom().getRoomId();
+        }
     }
 } 

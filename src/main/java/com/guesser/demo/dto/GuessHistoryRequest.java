@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class GuessHistoryRequest {
-    private String gameId;
+    private String roomId; // Changed from gameId to roomId
 }

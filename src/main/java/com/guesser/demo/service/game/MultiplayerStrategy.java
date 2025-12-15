@@ -9,12 +9,15 @@ import com.guesser.demo.repository.GuessHistoryRepository;
 import com.guesser.demo.dto.GuessResponse;
 import com.guesser.demo.dto.StartGuesserResponse;
 import com.guesser.demo.dto.StartGuesserRequest;
+import com.guesser.demo.dto.PlayerJoinedNotification;
+import com.guesser.demo.dto.TurnNotification;
 import com.guesser.demo.service.GameLevelService;
 import com.guesser.demo.exception.ErrorCodes;
 import com.guesser.demo.exception.GuesserException;
 import com.guesser.demo.constants.GameConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -37,6 +40,9 @@ public class MultiplayerStrategy implements GameStrategy {
     @Autowired
     private GuessHistoryRepository guessHistoryRepository;
     
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
+    
     @Override
     public StartGuesserResponse startGame(StartGuesserRequest request) {
         logger.info(GameConstants.LOG_PLAYER_STARTING, request.getPlayerId());
@@ -52,6 +58,9 @@ public class MultiplayerStrategy implements GameStrategy {
         }
 
         GameRoom room;
+        boolean isPlayer2Joining = false;
+        String player1Id = null;
+        boolean limitAttempts = request.getLimitAttempts() == null || request.getLimitAttempts();
         
         // If roomId is provided, try to join that specific room
         if (request.getRoomId() != null && !request.getRoomId().trim().isEmpty()) {
@@ -78,8 +87,11 @@ public class MultiplayerStrategy implements GameStrategy {
             }
             
             logger.info(GameConstants.LOG_ROOM_FOUND, room.getRoomId(), request.getPlayerId(), room.getPlayer1Id());
+            player1Id = room.getPlayer1Id();
+            isPlayer2Joining = true;
             room.setPlayer2Id(request.getPlayerId());
             room.setStatus(GameConstants.ROOM_STATUS_IN_PROGRESS);
+            limitAttempts = room.isLimitAttempts();
         } else {
             // Try to find a room with one player waiting AND matching level
             Optional<GameRoom> availableRoom = gameRoomRepository.findByStatusAndPlayer2IdIsNullAndLevel(
@@ -89,8 +101,11 @@ public class MultiplayerStrategy implements GameStrategy {
                 // Join existing room with matching level
                 room = availableRoom.get();
                 logger.info(GameConstants.LOG_ROOM_FOUND, room.getRoomId(), request.getPlayerId(), room.getPlayer1Id());
+                player1Id = room.getPlayer1Id();
+                isPlayer2Joining = true;
                 room.setPlayer2Id(request.getPlayerId());
                 room.setStatus(GameConstants.ROOM_STATUS_IN_PROGRESS);
+                limitAttempts = room.isLimitAttempts();
             } else {
                 // Create new room with the requested level
                 room = new GameRoom();
@@ -98,6 +113,7 @@ public class MultiplayerStrategy implements GameStrategy {
                 room.setPlayer1Id(request.getPlayerId());
                 room.setStatus(GameConstants.ROOM_STATUS_WAITING);
                 room.setLevel(request.getLevel());
+                room.setLimitAttempts(limitAttempts);
                 logger.info(GameConstants.LOG_ROOM_CREATED, room.getRoomId(), request.getPlayerId());
             }
         }
@@ -121,19 +137,46 @@ public class MultiplayerStrategy implements GameStrategy {
         game.setSecretNumber(secretNumber);
         game.setLevel(gameLevel);
         game.setGameMode(GameConstants.MULTIPLAYER);
+        game.setLimitAttempts(room.isLimitAttempts());
         
-        // Set current player if this is the first player
+        // Set current player
         if (room.getPlayer2Id() == null) {
+            // First player - they start
             game.setCurrentPlayerId(request.getPlayerId());
             logger.info(GameConstants.LOG_FIRST_PLAYER, request.getPlayerId(), room.getRoomId());
         } else {
+            // Second player - get current player from P1's game
+            Guesser player1Game = gameRepository.findByRoomAndPlayerId(room, room.getPlayer1Id())
+                .orElseThrow(() -> new GuesserException(ErrorCodes.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR));
+            game.setCurrentPlayerId(player1Game.getCurrentPlayerId());
             logger.info(GameConstants.LOG_SECOND_PLAYER, request.getPlayerId(), room.getRoomId());
         }
         
         room = gameRoomRepository.save(room);
         game = gameRepository.save(game);
         
+        // Notify P1 if P2 just joined
+        if (isPlayer2Joining && player1Id != null) {
+            PlayerJoinedNotification notification = new PlayerJoinedNotification(
+                room.getRoomId(),
+                request.getPlayerId(),
+                "Player " + request.getPlayerId() + " has joined the game!",
+                room.getStatus()
+            );
+            messagingTemplate.convertAndSend("/topic/room/" + room.getRoomId(), notification);
+            logger.info("Sent player joined notification to room {} for player {}", room.getRoomId(), player1Id);
+        }
+        
         logger.info(GameConstants.LOG_GAME_STARTED, request.getPlayerId(), room.getRoomId(), game.getStatus());
+
+        Integer remainingAttempts = gameLevelService.getRemainingAttempts(
+            game.getLevel(),
+            game.getGuessCount(),
+            room.isLimitAttempts()
+        );
+        Integer maxGuesses = room.isLimitAttempts()
+            ? gameLevelService.getMaxGuessesForLevel(game.getLevel(), true)
+            : null;
         
         return new StartGuesserResponse(
             game.getGameId(),
@@ -142,7 +185,12 @@ public class MultiplayerStrategy implements GameStrategy {
             game.getLevel(),
             game.getGameMode(),
             game.getPlayerId(),
-            room.getRoomId()
+            room.getRoomId(),
+            room.getStatus(),
+            game.getCurrentPlayerId(),
+            room.isLimitAttempts(),
+            remainingAttempts,
+            maxGuesses
         );
     }
     
@@ -173,7 +221,8 @@ public class MultiplayerStrategy implements GameStrategy {
         guessHistoryRepository.save(guessHistory);
         
         int numberLength = gameLevelService.getNumberLengthForLevel(game.getLevel());
-        int maxGuesses = gameLevelService.getMaxGuessesForLevel(game.getLevel());
+        boolean limitAttempts = game.isLimitAttempts();
+        int maxGuesses = gameLevelService.getMaxGuessesForLevel(game.getLevel(), limitAttempts);
         
         // Check if the guess is correct
         if (correctDigits == numberLength) {
@@ -192,7 +241,7 @@ public class MultiplayerStrategy implements GameStrategy {
             room.setStatus(GameConstants.ROOM_STATUS_COMPLETED);
             room.setEndTime(java.time.LocalDateTime.now());
             gameRoomRepository.save(room);
-        } else if (game.getGuessCount() >= maxGuesses) {
+        } else if (limitAttempts && game.getGuessCount() >= maxGuesses) {
             logger.info(GameConstants.LOG_PLAYER_USED_ALL_GUESSES, playerId, game.getGameId(), game.getRoom().getRoomId());
             game.setStatus(GameConstants.STATUS_COMPLETED);
             game.setEndTime(java.time.LocalDateTime.now());
@@ -211,20 +260,62 @@ public class MultiplayerStrategy implements GameStrategy {
             }
         }
         
+        String nextPlayerId = null;
+        GameRoom room = game.getRoom();
+        
         // Switch turns if the game is still in progress
         if (GameConstants.STATUS_IN_PROGRESS.equals(game.getStatus())) {
-            game.setCurrentPlayerId(opponentGame.getPlayerId());
+            nextPlayerId = opponentGame.getPlayerId();
+            game.setCurrentPlayerId(nextPlayerId);
             game = gameRepository.save(game);
             
-            opponentGame.setCurrentPlayerId(opponentGame.getPlayerId());
+            opponentGame.setCurrentPlayerId(nextPlayerId);
             gameRepository.save(opponentGame);
             
-            logger.info(GameConstants.LOG_TURN_SWITCHED, opponentGame.getPlayerId(), game.getGameId(), game.getRoom().getRoomId());
+            logger.info(GameConstants.LOG_TURN_SWITCHED, nextPlayerId, game.getGameId(), room.getRoomId());
+        } else {
+            // Game ended, no next player
+            nextPlayerId = null;
         }
         
         game = gameRepository.save(game);
         
-        int remainingAttempts = maxGuesses - game.getGuessCount();
+        Integer remainingAttempts = gameLevelService.getRemainingAttempts(
+            game.getLevel(),
+            game.getGuessCount(),
+            limitAttempts
+        );
+        
+        // Send WebSocket notification to both players in the room
+        String message;
+        if (GameConstants.STATUS_COMPLETED.equals(game.getStatus())) {
+            if (game.isHasWon()) {
+                message = "Player " + playerId + " has won the game!";
+            } else {
+                message = limitAttempts
+                    ? "Game ended. Player " + playerId + " has used all attempts."
+                    : "Game ended.";
+            }
+        } else {
+            message = "Player " + playerId + " made a guess. It's now " + nextPlayerId + "'s turn!";
+        }
+        
+        TurnNotification turnNotification = new TurnNotification(
+            room.getRoomId(),
+            playerId,
+            guess,
+            correctDigits,
+            game.getGuessCount(),
+            remainingAttempts,
+            nextPlayerId,
+            game.getStatus(),
+            message
+        );
+        
+        // Send notification to room topic so both players receive it
+        messagingTemplate.convertAndSend("/topic/room/" + room.getRoomId(), turnNotification);
+        logger.info("Sent turn notification to room {} - Player {} guessed, next player: {}", 
+            room.getRoomId(), playerId, nextPlayerId);
         
         return new GuessResponse(
             correctDigits,

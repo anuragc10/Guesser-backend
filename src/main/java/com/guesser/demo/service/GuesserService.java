@@ -82,15 +82,16 @@ public class GuesserService {
         return strategy.submitGuess(game, guess, playerId);
     }
     
-    public List<GuessHistoryResponse> getGuessHistory(String gameId) {
-        if (gameId == null || gameId.trim().isEmpty()) {
+    public List<GuessHistoryResponse> getGuessHistory(String roomId) {
+        if (roomId == null || roomId.trim().isEmpty()) {
             throw new GuesserException(ErrorCodes.INVALID_GAME_ID, HttpStatus.BAD_REQUEST);
         }
         
-        Guesser game = gameRepository.findById(gameId)
-            .orElseThrow(() -> new GuesserException(ErrorCodes.GAME_NOT_FOUND, HttpStatus.NOT_FOUND, gameId));
+        // Validate room exists
+        GameRoom room = gameRoomRepository.findById(roomId)
+            .orElseThrow(() -> new GuesserException(ErrorCodes.ROOM_NOT_FOUND, HttpStatus.NOT_FOUND, roomId));
             
-        return guessHistoryRepository.findByGameGameIdOrderByGuessTimeDesc(gameId)
+        return guessHistoryRepository.findByRoomIdOrderByGuessTimeDesc(roomId)
             .stream()
             .map(history -> new GuessHistoryResponse(
                 history.getGuessedNumber(),

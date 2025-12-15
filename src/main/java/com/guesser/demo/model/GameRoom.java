@@ -19,10 +19,12 @@ public class GameRoom {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private int level;
+    private boolean limitAttempts;
     
     {
         this.startTime = LocalDateTime.now();
         this.status = "WAITING_FOR_PLAYER";
         this.level = 1;
+        this.limitAttempts = true;
     }
 } 

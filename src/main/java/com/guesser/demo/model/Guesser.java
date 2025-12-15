@@ -32,6 +32,7 @@ public class Guesser {
     private int level;
     private String gameMode; // SINGLE_PLAYER, MULTIPLAYER
     private String currentPlayerId; // ID of the player whose turn it is
+    private boolean limitAttempts;
     
     {
         this.startTime = LocalDateTime.now();
@@ -40,5 +41,6 @@ public class Guesser {
         this.hasWon = false;
         this.level = 1;
         this.gameMode = "SINGLE_PLAYER";
+        this.limitAttempts = true;
     }
 } 

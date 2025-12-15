@@ -12,5 +12,5 @@ public class GuessResponse {
     private int guessNumber;
     private String status;
     private String guessedNumber;
-    private int remainingAttempts;
+    private Integer remainingAttempts;
 } 

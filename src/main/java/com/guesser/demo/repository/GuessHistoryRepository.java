@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface GuessHistoryRepository extends JpaRepository<GuessHistory, String> {
     List<GuessHistory> findByGameGameIdOrderByGuessTimeDesc(String gameId);
+    List<GuessHistory> findByRoomIdOrderByGuessTimeDesc(String roomId);
 } 

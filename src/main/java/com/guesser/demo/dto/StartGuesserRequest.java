@@ -9,4 +9,5 @@ public class StartGuesserRequest {
     private String playerId; // ID of the player
     private String secretNumber; // Secret number for multiplayer mode
     private String roomId; // Optional room ID for multiplayer mode
+    private Boolean limitAttempts = true; // Toggle to enforce attempt limits per game
 } 

@@ -9,7 +9,16 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/guess")
-@CrossOrigin(origins = "*")
+//@CrossOrigin(
+//        origins = {
+//                "https://number-guesser-8ysi1tj6z-anurags-projects-e0f6082e.vercel.app",
+//                "https://ana-snuffier-henry.ngrok-free.dev"
+//        },
+//        allowedHeaders = "*",
+//        methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS},
+//        allowCredentials = "true"
+//)
+@CrossOrigin(origins = "*", allowedHeaders = "*", allowCredentials = "false")
 public class GuesserController {
 
     @Autowired
@@ -26,10 +35,10 @@ public class GuesserController {
         return ResponseEntity.ok(guesserService.submitGuess(request.getGameId(), request.getGuess(), request.getPlayerId()));
     }
     
-    @GetMapping("/history")
+    @PostMapping("/history")
     public ResponseEntity<List<GuessHistoryResponse>> getGuessHistory(
             @RequestBody GuessHistoryRequest request) {
-        return ResponseEntity.ok(guesserService.getGuessHistory(request.getGameId()));
+        return ResponseEntity.ok(guesserService.getGuessHistory(request.getRoomId()));
     }
     
     @PostMapping("/end")

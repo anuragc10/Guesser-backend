@@ -30,6 +30,7 @@ public class SinglePlayerStrategy implements GameStrategy {
     @Override
     public StartGuesserResponse startGame(StartGuesserRequest request) {
         logger.info(GameConstants.LOG_SINGLE_PLAYER_STARTING, request.getPlayerId());
+        boolean limitAttempts = request.getLimitAttempts() == null || request.getLimitAttempts();
 
         // Generate or validate secret number based on the level
         String secretNumber;
@@ -51,9 +52,19 @@ public class SinglePlayerStrategy implements GameStrategy {
         game.setGameMode(GameConstants.SINGLE_PLAYER);
         game.setStatus(GameConstants.STATUS_IN_PROGRESS);
         game.setCurrentPlayerId(request.getPlayerId());
+        game.setLimitAttempts(limitAttempts);
 
         game = gameRepository.save(game);
         logger.info(GameConstants.LOG_SINGLE_PLAYER_GAME_CREATED, request.getPlayerId(), game.getGameId());
+
+        Integer remainingAttempts = gameLevelService.getRemainingAttempts(
+            game.getLevel(),
+            game.getGuessCount(),
+            limitAttempts
+        );
+        Integer maxGuesses = limitAttempts 
+            ? gameLevelService.getMaxGuessesForLevel(game.getLevel(), true)
+            : null;
 
         return new StartGuesserResponse(
             game.getGameId(),
@@ -62,7 +73,12 @@ public class SinglePlayerStrategy implements GameStrategy {
             game.getLevel(),
             game.getGameMode(),
             game.getPlayerId(),
-            null
+            null,
+            null, // No room for single player
+            game.getCurrentPlayerId(),
+            limitAttempts,
+            remainingAttempts,
+            maxGuesses
         );
     }
 
@@ -88,6 +104,14 @@ public class SinglePlayerStrategy implements GameStrategy {
 
         game.setGuessCount(game.getGuessCount() + 1);
 
+        boolean limitAttempts = game.isLimitAttempts();
+        int maxGuesses = gameLevelService.getMaxGuessesForLevel(game.getLevel(), limitAttempts);
+        Integer remainingAttempts = gameLevelService.getRemainingAttempts(
+            game.getLevel(),
+            game.getGuessCount(),
+            limitAttempts
+        );
+
         if (isCorrect) {
             game.setStatus(GameConstants.STATUS_COMPLETED);
             game.setHasWon(true);
@@ -98,11 +122,11 @@ public class SinglePlayerStrategy implements GameStrategy {
                 game.getGuessCount(),
                 GameConstants.STATUS_COMPLETED,
                 guess,
-                getMaxGuessesForLevel(game.getLevel()) - game.getGuessCount()
+                remainingAttempts
             );
         }
 
-        if (game.getGuessCount() >= getMaxGuessesForLevel(game.getLevel())) {
+        if (limitAttempts && game.getGuessCount() >= maxGuesses) {
             game.setStatus(GameConstants.STATUS_COMPLETED);
             gameRepository.save(game);
             logger.info(GameConstants.LOG_SINGLE_PLAYER_GAME_OVER, playerId, game.getGameId(), game.getGuessCount());
@@ -121,17 +145,8 @@ public class SinglePlayerStrategy implements GameStrategy {
             game.getGuessCount(),
             game.getStatus(),
             guess,
-            getMaxGuessesForLevel(game.getLevel()) - game.getGuessCount()
+            remainingAttempts
         );
-    }
-
-    private int getMaxGuessesForLevel(int level) {
-        return switch (level) {
-            case GameConstants.LEVEL_1 -> GameConstants.LEVEL_1_MAX_GUESSES;
-            case GameConstants.LEVEL_2 -> GameConstants.LEVEL_2_MAX_GUESSES;
-            case GameConstants.LEVEL_3 -> GameConstants.LEVEL_3_MAX_GUESSES;
-            default -> GameConstants.LEVEL_1_MAX_GUESSES;
-        };
     }
 
     private int calculateCorrectDigits(String guess, String secretNumber) {
