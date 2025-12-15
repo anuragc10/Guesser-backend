@@ -28,6 +28,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                         "https://*.ngrok-free.dev",
                         "https://*.vercel.app",
                         "http://localhost:*",
+                        "https://*.netlify.app",
                         "http://127.0.0.1:*"
                 )
                 .withSockJS();
