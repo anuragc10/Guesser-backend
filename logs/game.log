@@ -74,3 +74,69 @@ java.lang.IllegalArgumentException: Invalid character found in method name [0x16
 2025-12-15T18:20:09.195+05:30  WARN 39041 --- [guessergame] [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-224]
 2025-12-15T18:20:09.196+05:30  INFO 39041 --- [guessergame] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2025-12-15T18:20:09.199+05:30  INFO 39041 --- [guessergame] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-12-15T21:31:24.942+05:30  INFO 23430 --- [guessergame] [restartedMain] com.guesser.demo.MainApplication         : Starting MainApplication using Java 17.0.15 with PID 23430 (/Users/anuragsingh/Documents/project/Guess-The-Number/target/classes started by anuragsingh in /Users/anuragsingh/Documents/project/Guess-The-Number)
+2025-12-15T21:31:24.944+05:30 DEBUG 23430 --- [guessergame] [restartedMain] com.guesser.demo.MainApplication         : Running with Spring Boot v3.2.3, Spring v6.1.4
+2025-12-15T21:31:24.944+05:30  INFO 23430 --- [guessergame] [restartedMain] com.guesser.demo.MainApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-12-15T21:31:24.974+05:30  INFO 23430 --- [guessergame] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-12-15T21:31:24.974+05:30  INFO 23430 --- [guessergame] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-12-15T21:31:25.409+05:30  INFO 23430 --- [guessergame] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-15T21:31:25.440+05:30  INFO 23430 --- [guessergame] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 26 ms. Found 3 JPA repository interfaces.
+2025-12-15T21:31:25.884+05:30  INFO 23430 --- [guessergame] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-12-15T21:31:26.111+05:30  INFO 23430 --- [guessergame] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-12-15T21:31:26.113+05:30  INFO 23430 --- [guessergame] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2025-12-15T21:31:26.243+05:30  INFO 23430 --- [guessergame] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-12-15T21:31:26.244+05:30  INFO 23430 --- [guessergame] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1268 ms
+2025-12-15T21:31:26.293+05:30  INFO 23430 --- [guessergame] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-12-15T21:31:26.542+05:30  INFO 23430 --- [guessergame] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2025-12-15T21:31:26.544+05:30  INFO 23430 --- [guessergame] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-12-15T21:31:26.553+05:30  INFO 23430 --- [guessergame] [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2025-12-15T21:31:26.644+05:30  INFO 23430 --- [guessergame] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-15T21:31:26.702+05:30  INFO 23430 --- [guessergame] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2025-12-15T21:31:26.718+05:30  INFO 23430 --- [guessergame] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-12-15T21:31:26.853+05:30  INFO 23430 --- [guessergame] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-15T21:31:26.882+05:30  WARN 23430 --- [guessergame] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-12-15T21:31:27.297+05:30  INFO 23430 --- [guessergame] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-15T21:31:27.324+05:30  INFO 23430 --- [guessergame] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-15T21:31:27.640+05:30  WARN 23430 --- [guessergame] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'loggingConfig': Invocation of init method failed
+2025-12-15T21:31:27.641+05:30  INFO 23430 --- [guessergame] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-15T21:31:27.644+05:30  WARN 23430 --- [guessergame] [restartedMain] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-224]
+2025-12-15T21:31:27.644+05:30  INFO 23430 --- [guessergame] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-12-15T21:31:27.645+05:30  INFO 23430 --- [guessergame] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-12-15T21:32:23.004+05:30  INFO 24918 --- [guessergame] [restartedMain] com.guesser.demo.MainApplication         : Starting MainApplication using Java 17.0.15 with PID 24918 (/Users/anuragsingh/Documents/project/Guess-The-Number/target/classes started by anuragsingh in /Users/anuragsingh/Documents/project/Guess-The-Number)
+2025-12-15T21:32:23.005+05:30 DEBUG 24918 --- [guessergame] [restartedMain] com.guesser.demo.MainApplication         : Running with Spring Boot v3.2.3, Spring v6.1.4
+2025-12-15T21:32:23.006+05:30  INFO 24918 --- [guessergame] [restartedMain] com.guesser.demo.MainApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-12-15T21:32:23.042+05:30  INFO 24918 --- [guessergame] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-12-15T21:32:23.042+05:30  INFO 24918 --- [guessergame] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-12-15T21:32:23.436+05:30  INFO 24918 --- [guessergame] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-15T21:32:23.465+05:30  INFO 24918 --- [guessergame] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 25 ms. Found 3 JPA repository interfaces.
+2025-12-15T21:32:23.777+05:30  INFO 24918 --- [guessergame] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-12-15T21:32:23.783+05:30  INFO 24918 --- [guessergame] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-12-15T21:32:23.783+05:30  INFO 24918 --- [guessergame] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2025-12-15T21:32:23.806+05:30  INFO 24918 --- [guessergame] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-12-15T21:32:23.807+05:30  INFO 24918 --- [guessergame] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 765 ms
+2025-12-15T21:32:23.822+05:30  INFO 24918 --- [guessergame] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-12-15T21:32:23.935+05:30  INFO 24918 --- [guessergame] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2025-12-15T21:32:23.939+05:30  INFO 24918 --- [guessergame] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-12-15T21:32:23.945+05:30  INFO 24918 --- [guessergame] [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2025-12-15T21:32:24.065+05:30  INFO 24918 --- [guessergame] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-15T21:32:24.098+05:30  INFO 24918 --- [guessergame] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2025-12-15T21:32:24.115+05:30  INFO 24918 --- [guessergame] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-12-15T21:32:24.227+05:30  INFO 24918 --- [guessergame] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-15T21:32:24.253+05:30  WARN 24918 --- [guessergame] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-12-15T21:32:24.689+05:30  INFO 24918 --- [guessergame] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-15T21:32:24.723+05:30  INFO 24918 --- [guessergame] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-15T21:32:25.034+05:30  WARN 24918 --- [guessergame] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-15T21:32:25.188+05:30  INFO 24918 --- [guessergame] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-12-15T21:32:25.207+05:30  INFO 24918 --- [guessergame] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2025-12-15T21:32:25.208+05:30  INFO 24918 --- [guessergame] [restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : Starting...
+2025-12-15T21:32:25.209+05:30  INFO 24918 --- [guessergame] [restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@1d15f6f7]]
+2025-12-15T21:32:25.209+05:30  INFO 24918 --- [guessergame] [restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : Started.
+2025-12-15T21:32:25.218+05:30  INFO 24918 --- [guessergame] [restartedMain] com.guesser.demo.MainApplication         : Started MainApplication in 2.521 seconds (process running for 3.03)
+2025-12-15T21:32:28.668+05:30  INFO 24918 --- [guessergame] [Thread-4] com.guesser.demo.config.LoggingConfig    : Application shutting down, flushing logs...
+2025-12-15T21:32:28.679+05:30  INFO 24918 --- [guessergame] [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : Stopping...
+2025-12-15T21:32:28.680+05:30  INFO 24918 --- [guessergame] [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@1d15f6f7]]
+2025-12-15T21:32:28.680+05:30  INFO 24918 --- [guessergame] [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : Stopped.
+2025-12-15T21:32:28.694+05:30  INFO 24918 --- [guessergame] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-15T21:32:28.699+05:30  WARN 24918 --- [guessergame] [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-224]
+2025-12-15T21:32:28.699+05:30  INFO 24918 --- [guessergame] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-12-15T21:32:28.703+05:30  INFO 24918 --- [guessergame] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

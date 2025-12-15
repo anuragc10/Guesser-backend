@@ -1,16 +1,12 @@
 package com.guesser.demo.service.game;
 
+import com.guesser.demo.dto.*;
 import com.guesser.demo.model.Guesser;
 import com.guesser.demo.model.GameRoom;
 import com.guesser.demo.model.GuessHistory;
 import com.guesser.demo.repository.GameRepository;
 import com.guesser.demo.repository.GameRoomRepository;
 import com.guesser.demo.repository.GuessHistoryRepository;
-import com.guesser.demo.dto.GuessResponse;
-import com.guesser.demo.dto.StartGuesserResponse;
-import com.guesser.demo.dto.StartGuesserRequest;
-import com.guesser.demo.dto.PlayerJoinedNotification;
-import com.guesser.demo.dto.TurnNotification;
 import com.guesser.demo.service.GameLevelService;
 import com.guesser.demo.exception.ErrorCodes;
 import com.guesser.demo.exception.GuesserException;
