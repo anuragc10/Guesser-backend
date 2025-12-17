@@ -210,11 +210,13 @@ public class MultiplayerStrategy implements GameStrategy {
         game.setGuessCount(game.getGuessCount() + 1);
         
         logger.info(GameConstants.LOG_GUESS_MADE, playerId, guess, game.getGameId(), correctDigits);
-        
-        // Store guess history
-        GuessHistory guessHistory = new GuessHistory(game, guess, correctDigits);
-        guessHistory.setPlayerId(playerId);
-        guessHistoryRepository.save(guessHistory);
+
+
+        // TODO : It is not needed now, for future we can use it
+//        // Store guess history
+//        GuessHistory guessHistory = new GuessHistory(game, guess, correctDigits);
+//        guessHistory.setPlayerId(playerId);
+//        guessHistoryRepository.save(guessHistory);
         
         int numberLength = gameLevelService.getNumberLengthForLevel(game.getLevel());
         boolean limitAttempts = game.isLimitAttempts();
