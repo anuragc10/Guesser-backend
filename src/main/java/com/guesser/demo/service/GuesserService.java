@@ -1,25 +1,20 @@
 package com.guesser.demo.service;
 
 import com.guesser.demo.constants.GameConstants;
+import com.guesser.demo.dto.*;
 import com.guesser.demo.model.Guesser;
 import com.guesser.demo.model.GameRoom;
 import com.guesser.demo.model.GuessHistory;
 import com.guesser.demo.repository.GameRepository;
 import com.guesser.demo.repository.GameRoomRepository;
 import com.guesser.demo.repository.GuessHistoryRepository;
-import com.guesser.demo.dto.GuessResponse;
-import com.guesser.demo.dto.StartGuesserResponse;
-import com.guesser.demo.dto.StartGuesserRequest;
-import com.guesser.demo.dto.GuessHistoryResponse;
-import com.guesser.demo.dto.JoinGameRequest;
-import com.guesser.demo.dto.EndGameRequest;
-import com.guesser.demo.dto.EndGameResponse;
 import com.guesser.demo.exception.ErrorCodes;
 import com.guesser.demo.exception.GuesserException;
 import com.guesser.demo.service.game.GameStrategy;
 import com.guesser.demo.service.game.SinglePlayerStrategy;
 import com.guesser.demo.service.game.MultiplayerStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.http.HttpStatus;
 import java.util.List;
@@ -50,7 +45,9 @@ public class GuesserService {
     
     @Autowired
     private MultiplayerStrategy multiplayerStrategy;
-    
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
+
     public StartGuesserResponse startNewGame(StartGuesserRequest request) {
         if (request == null) {
             request = new StartGuesserRequest();
@@ -160,6 +157,25 @@ public class GuesserService {
                 room.setStatus(GameConstants.ROOM_STATUS_COMPLETED);
                 room.setEndTime(endTime);
                 gameRoomRepository.save(room);
+                message = winnerPlayerId != null
+                        ? String.format("Player left the game,  %s wins!", winnerPlayerId)
+                        : "Game ended.";
+
+                // --- WebSocket Broadcast ---
+                TurnNotification notification = new TurnNotification(
+                        room.getRoomId(),
+                        request.getPlayerId(),  // player who left
+                        null,                   // guessedNumber
+                        0,                      // correctDigits
+                        game.getGuessCount(),
+                        null,                   // remainingAttempts
+                        null,                   // nextPlayerId
+                        GameConstants.STATUS_COMPLETED,
+                        message
+                );
+
+                messagingTemplate.convertAndSend("/topic/room/" + room.getRoomId(), notification);
+
             }
             
             if (winnerPlayerId != null) {

@@ -19,11 +19,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws")
-//                .setAllowedOrigins(
-//                    "https://number-guesser-8ysi1tj6z-anurags-projects-e0f6082e.vercel.app",
-//                    "https://ana-snuffier-henry.ngrok-free.dev"
-//                )
-                // Allow specific hosts and patterns (no wildcard-only) so credentials are accepted.
                 .setAllowedOriginPatterns(
                         "https://*.ngrok-free.dev",
                         "https://*.vercel.app",
