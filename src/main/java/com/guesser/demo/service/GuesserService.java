@@ -197,6 +197,24 @@ public class GuesserService {
             winnerPlayerId
         );
     }
+
+    public GameRoomResponse getRoomDetails(String roomId) {
+        if (roomId == null || roomId.trim().isEmpty()) {
+            throw new GuesserException(ErrorCodes.INVALID_GAME_ID, HttpStatus.BAD_REQUEST);
+        }
+
+        GameRoom room = gameRoomRepository.findById(roomId)
+            .orElseThrow(() -> new GuesserException(ErrorCodes.ROOM_NOT_FOUND, HttpStatus.NOT_FOUND, roomId));
+
+        return new GameRoomResponse(
+            room.getRoomId(),
+            room.getStatus(),
+            room.getLevel(),
+            room.isLimitAttempts(),
+            room.getPlayer1Id(),
+            room.getPlayer2Id()
+        );
+    }
     
     private int countCorrectDigits(String secret, String guess) {
         int count = 0;

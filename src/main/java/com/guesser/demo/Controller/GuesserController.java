@@ -36,4 +36,9 @@ public class GuesserController {
     public ResponseEntity<EndGameResponse> endGame(@RequestBody EndGameRequest request) {
         return ResponseEntity.ok(guesserService.endGame(request));
     }
+
+    @GetMapping("/room/{roomId}")
+    public ResponseEntity<GameRoomResponse> getRoomDetails(@PathVariable String roomId) {
+        return ResponseEntity.ok(guesserService.getRoomDetails(roomId));
+    }
 } 
