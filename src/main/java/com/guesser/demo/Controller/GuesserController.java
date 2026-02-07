@@ -36,8 +36,8 @@ public class GuesserController {
         return ResponseEntity.ok(guesserService.endGame(request));
     }
 
-    @GetMapping("/room/{roomId}")
-    public ResponseEntity<GameRoomResponse> getRoomDetails(@PathVariable String roomId) {
-        return ResponseEntity.ok(guesserService.getRoomDetails(roomId));
+    @PostMapping("/roomDetails")
+    public ResponseEntity<GameRoomResponse> getRoomDetails(@RequestBody RoomDetailsRequest request) {
+        return ResponseEntity.ok(guesserService.getRoomDetails(request.getRoomId()));
     }
 } 
