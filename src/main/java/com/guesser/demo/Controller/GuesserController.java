@@ -9,7 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/guess")
-@CrossOrigin(origins = "*", allowedHeaders = "*", allowCredentials = "false")
 public class GuesserController {
 
     @Autowired

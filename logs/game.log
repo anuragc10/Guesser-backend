@@ -179,3 +179,96 @@
 2026-02-08T01:24:24.210+05:30  WARN 22155 --- [guessergame] [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-224]
 2026-02-08T01:24:24.210+05:30  INFO 22155 --- [guessergame] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2026-02-08T01:24:24.211+05:30  INFO 22155 --- [guessergame] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-02-08T01:27:57.360+05:30  INFO 22801 --- [guessergame] [restartedMain] com.guesser.demo.MainApplication         : Starting MainApplication using Java 17.0.15 with PID 22801 (/Users/anuragsingh/Documents/project/Guess-The-Number/${project.build.directory}/classes started by anuragsingh in /Users/anuragsingh/Documents/project/Guess-The-Number)
+2026-02-08T01:27:57.362+05:30 DEBUG 22801 --- [guessergame] [restartedMain] com.guesser.demo.MainApplication         : Running with Spring Boot v3.2.3, Spring v6.1.4
+2026-02-08T01:27:57.362+05:30  INFO 22801 --- [guessergame] [restartedMain] com.guesser.demo.MainApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-02-08T01:27:57.427+05:30  INFO 22801 --- [guessergame] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-02-08T01:27:57.427+05:30  INFO 22801 --- [guessergame] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-02-08T01:27:57.963+05:30  INFO 22801 --- [guessergame] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-08T01:27:58.014+05:30  INFO 22801 --- [guessergame] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 39 ms. Found 3 JPA repository interfaces.
+2026-02-08T01:27:58.392+05:30  INFO 22801 --- [guessergame] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-02-08T01:27:58.398+05:30  INFO 22801 --- [guessergame] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-02-08T01:27:58.399+05:30  INFO 22801 --- [guessergame] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-02-08T01:27:58.426+05:30  INFO 22801 --- [guessergame] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-02-08T01:27:58.426+05:30  INFO 22801 --- [guessergame] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 999 ms
+2026-02-08T01:27:58.446+05:30  INFO 22801 --- [guessergame] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-02-08T01:27:58.684+05:30  INFO 22801 --- [guessergame] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2026-02-08T01:27:58.693+05:30  INFO 22801 --- [guessergame] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-02-08T01:27:58.729+05:30  INFO 22801 --- [guessergame] [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2026-02-08T01:27:58.896+05:30  INFO 22801 --- [guessergame] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-08T01:27:58.977+05:30  INFO 22801 --- [guessergame] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-02-08T01:27:59.011+05:30  INFO 22801 --- [guessergame] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-02-08T01:27:59.197+05:30  INFO 22801 --- [guessergame] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-08T01:27:59.244+05:30  WARN 22801 --- [guessergame] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-08T01:27:59.929+05:30  INFO 22801 --- [guessergame] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-08T01:27:59.967+05:30  INFO 22801 --- [guessergame] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-08T01:28:00.382+05:30  WARN 22801 --- [guessergame] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-08T01:28:00.618+05:30  INFO 22801 --- [guessergame] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-02-08T01:28:00.647+05:30  INFO 22801 --- [guessergame] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-02-08T01:28:00.649+05:30  INFO 22801 --- [guessergame] [restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : Starting...
+2026-02-08T01:28:00.650+05:30  INFO 22801 --- [guessergame] [restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@21756aea]]
+2026-02-08T01:28:00.650+05:30  INFO 22801 --- [guessergame] [restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : Started.
+2026-02-08T01:28:00.660+05:30  INFO 22801 --- [guessergame] [restartedMain] com.guesser.demo.MainApplication         : Started MainApplication in 4.053 seconds (process running for 5.676)
+2026-02-08T01:28:12.346+05:30  INFO 22801 --- [guessergame] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-08T01:28:12.347+05:30  INFO 22801 --- [guessergame] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-02-08T01:28:12.353+05:30  INFO 22801 --- [guessergame] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 6 ms
+2026-02-08T01:28:12.435+05:30  INFO 22801 --- [guessergame] [http-nio-8080-exec-2] c.g.d.service.game.MultiplayerStrategy   : Player joo#118220 attempting to start a multiplayer game
+2026-02-08T01:28:12.513+05:30  INFO 22801 --- [guessergame] [http-nio-8080-exec-2] c.g.d.service.game.MultiplayerStrategy   : Created new room 51f3b709-fe93-4fad-a381-1d4d10b8df9e for player joo#118220
+2026-02-08T01:28:12.513+05:30  INFO 22801 --- [guessergame] [http-nio-8080-exec-2] c.g.d.service.game.MultiplayerStrategy   : Player joo#118220 is the first player in room 51f3b709-fe93-4fad-a381-1d4d10b8df9e
+2026-02-08T01:28:12.560+05:30  INFO 22801 --- [guessergame] [http-nio-8080-exec-2] c.g.d.service.game.MultiplayerStrategy   : Game started for player joo#118220 in room 51f3b709-fe93-4fad-a381-1d4d10b8df9e with status IN_PROGRESS
+2026-02-08T01:28:23.497+05:30  INFO 22801 --- [guessergame] [http-nio-8080-exec-4] c.g.d.service.game.MultiplayerStrategy   : Player safdsa#504879 attempting to start a multiplayer game
+2026-02-08T01:28:23.505+05:30  INFO 22801 --- [guessergame] [http-nio-8080-exec-4] c.g.d.service.game.MultiplayerStrategy   : Found available room 51f3b709-fe93-4fad-a381-1d4d10b8df9e for player safdsa#504879. Room currently has player joo#118220
+2026-02-08T01:28:23.526+05:30  INFO 22801 --- [guessergame] [http-nio-8080-exec-4] c.g.d.service.game.MultiplayerStrategy   : Player safdsa#504879 joined room 51f3b709-fe93-4fad-a381-1d4d10b8df9e as second player
+2026-02-08T01:28:23.541+05:30  INFO 22801 --- [guessergame] [http-nio-8080-exec-4] c.g.d.service.game.MultiplayerStrategy   : Sent player joined notification to room 51f3b709-fe93-4fad-a381-1d4d10b8df9e for player joo#118220
+2026-02-08T01:28:23.541+05:30  INFO 22801 --- [guessergame] [http-nio-8080-exec-4] c.g.d.service.game.MultiplayerStrategy   : Game started for player safdsa#504879 in room 51f3b709-fe93-4fad-a381-1d4d10b8df9e with status IN_PROGRESS
+2026-02-08T01:28:42.830+05:30  INFO 22801 --- [guessergame] [Thread-4] com.guesser.demo.config.LoggingConfig    : Application shutting down, flushing logs...
+2026-02-08T01:28:42.843+05:30  INFO 22801 --- [guessergame] [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : Stopping...
+2026-02-08T01:28:42.843+05:30  INFO 22801 --- [guessergame] [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@21756aea]]
+2026-02-08T01:28:42.844+05:30  INFO 22801 --- [guessergame] [SpringApplicationShutdownHook] o.s.m.s.b.SimpleBrokerMessageHandler     : Stopped.
+2026-02-08T01:28:42.883+05:30  INFO 22801 --- [guessergame] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-08T01:28:42.901+05:30  WARN 22801 --- [guessergame] [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-224]
+2026-02-08T01:28:42.901+05:30  INFO 22801 --- [guessergame] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-02-08T01:28:42.903+05:30  INFO 22801 --- [guessergame] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-02-08T01:36:11.337+05:30  INFO 23112 --- [guessergame] [restartedMain] com.guesser.demo.MainApplication         : Starting MainApplication using Java 17.0.15 with PID 23112 (/Users/anuragsingh/Documents/project/Guess-The-Number/${project.build.directory}/classes started by anuragsingh in /Users/anuragsingh/Documents/project/Guess-The-Number)
+2026-02-08T01:36:11.339+05:30 DEBUG 23112 --- [guessergame] [restartedMain] com.guesser.demo.MainApplication         : Running with Spring Boot v3.2.3, Spring v6.1.4
+2026-02-08T01:36:11.340+05:30  INFO 23112 --- [guessergame] [restartedMain] com.guesser.demo.MainApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-02-08T01:36:11.385+05:30  INFO 23112 --- [guessergame] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-02-08T01:36:11.385+05:30  INFO 23112 --- [guessergame] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-02-08T01:36:11.767+05:30  INFO 23112 --- [guessergame] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-08T01:36:11.804+05:30  INFO 23112 --- [guessergame] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 32 ms. Found 3 JPA repository interfaces.
+2026-02-08T01:36:12.090+05:30  INFO 23112 --- [guessergame] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-02-08T01:36:12.097+05:30  INFO 23112 --- [guessergame] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-02-08T01:36:12.097+05:30  INFO 23112 --- [guessergame] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.19]
+2026-02-08T01:36:12.151+05:30  INFO 23112 --- [guessergame] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-02-08T01:36:12.152+05:30  INFO 23112 --- [guessergame] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 765 ms
+2026-02-08T01:36:12.172+05:30  INFO 23112 --- [guessergame] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-02-08T01:36:12.289+05:30  INFO 23112 --- [guessergame] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2026-02-08T01:36:12.290+05:30  INFO 23112 --- [guessergame] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-02-08T01:36:12.299+05:30  INFO 23112 --- [guessergame] [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2026-02-08T01:36:12.446+05:30  INFO 23112 --- [guessergame] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-08T01:36:12.537+05:30  INFO 23112 --- [guessergame] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-02-08T01:36:12.586+05:30  INFO 23112 --- [guessergame] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-02-08T01:36:13.189+05:30  INFO 23112 --- [guessergame] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-08T01:36:13.258+05:30  WARN 23112 --- [guessergame] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-08T01:36:13.927+05:30  INFO 23112 --- [guessergame] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-08T01:36:13.965+05:30  INFO 23112 --- [guessergame] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-08T01:36:14.457+05:30  WARN 23112 --- [guessergame] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-08T01:36:14.707+05:30  INFO 23112 --- [guessergame] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-02-08T01:36:14.732+05:30  INFO 23112 --- [guessergame] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-02-08T01:36:14.733+05:30  INFO 23112 --- [guessergame] [restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : Starting...
+2026-02-08T01:36:14.734+05:30  INFO 23112 --- [guessergame] [restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@28793270]]
+2026-02-08T01:36:14.735+05:30  INFO 23112 --- [guessergame] [restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : Started.
+2026-02-08T01:36:14.745+05:30  INFO 23112 --- [guessergame] [restartedMain] com.guesser.demo.MainApplication         : Started MainApplication in 3.754 seconds (process running for 4.558)
+2026-02-08T01:36:27.117+05:30  INFO 23112 --- [guessergame] [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-08T01:36:27.118+05:30  INFO 23112 --- [guessergame] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-02-08T01:36:27.121+05:30  INFO 23112 --- [guessergame] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2026-02-08T01:36:27.196+05:30  INFO 23112 --- [guessergame] [http-nio-8080-exec-2] c.g.d.service.game.MultiplayerStrategy   : Player hello#275209 attempting to start a multiplayer game
+2026-02-08T01:36:27.280+05:30  INFO 23112 --- [guessergame] [http-nio-8080-exec-2] c.g.d.service.game.MultiplayerStrategy   : Created new room 5f894fdd-dc5a-4d60-924d-a2f718ac90e5 for player hello#275209
+2026-02-08T01:36:27.280+05:30  INFO 23112 --- [guessergame] [http-nio-8080-exec-2] c.g.d.service.game.MultiplayerStrategy   : Player hello#275209 is the first player in room 5f894fdd-dc5a-4d60-924d-a2f718ac90e5
+2026-02-08T01:36:27.319+05:30  INFO 23112 --- [guessergame] [http-nio-8080-exec-2] c.g.d.service.game.MultiplayerStrategy   : Game started for player hello#275209 in room 5f894fdd-dc5a-4d60-924d-a2f718ac90e5 with status IN_PROGRESS
+2026-02-08T01:36:37.890+05:30  INFO 23112 --- [guessergame] [http-nio-8080-exec-3] c.g.d.service.game.MultiplayerStrategy   : Player hello#937798 attempting to start a multiplayer game
+2026-02-08T01:36:37.904+05:30  INFO 23112 --- [guessergame] [http-nio-8080-exec-3] c.g.d.service.game.MultiplayerStrategy   : Found available room 5f894fdd-dc5a-4d60-924d-a2f718ac90e5 for player hello#937798. Room currently has player hello#275209
+2026-02-08T01:36:37.921+05:30  INFO 23112 --- [guessergame] [http-nio-8080-exec-3] c.g.d.service.game.MultiplayerStrategy   : Player hello#937798 joined room 5f894fdd-dc5a-4d60-924d-a2f718ac90e5 as second player
+2026-02-08T01:36:37.941+05:30  INFO 23112 --- [guessergame] [http-nio-8080-exec-3] c.g.d.service.game.MultiplayerStrategy   : Sent player joined notification to room 5f894fdd-dc5a-4d60-924d-a2f718ac90e5 for player hello#275209
+2026-02-08T01:36:37.941+05:30  INFO 23112 --- [guessergame] [http-nio-8080-exec-3] c.g.d.service.game.MultiplayerStrategy   : Game started for player hello#937798 in room 5f894fdd-dc5a-4d60-924d-a2f718ac90e5 with status IN_PROGRESS
+2026-02-08T01:36:41.634+05:30  INFO 23112 --- [guessergame] [http-nio-8080-exec-2] c.guesser.demo.service.GuesserService    : Player hello#937798 ended the game. Player hello#275209 wins. Game: 92dc1a54-c796-49bd-9b3f-9bb47e509680, Room: 5f894fdd-dc5a-4d60-924d-a2f718ac90e5
