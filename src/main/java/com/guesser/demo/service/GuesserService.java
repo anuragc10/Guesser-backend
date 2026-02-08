@@ -198,8 +198,8 @@ public class GuesserService {
         );
     }
 
-    public GameRoomResponse getRoomDetails(RoomDetailsRequest request) {
-        String roomId = request!=null ? request.getRoomId() : null;
+    public GameRoomResponse getRoomDetails(String roomId) {
+
         if (roomId == null || roomId.trim().isEmpty()) {
             throw new GuesserException(ErrorCodes.INVALID_GAME_ID, HttpStatus.BAD_REQUEST);
         }

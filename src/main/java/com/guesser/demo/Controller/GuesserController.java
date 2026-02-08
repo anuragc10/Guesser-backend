@@ -42,18 +42,14 @@ public class GuesserController {
         return ResponseEntity.ok(guesserService.endGame(request));
     }
 
-    @PostMapping("/roomDetails")
+    @GetMapping("/roomDetails/{roomId}")
     public ResponseEntity<GameRoomResponse> getRoomDetails(
-            @RequestBody(required = false) RoomDetailsRequest request) {
-
-        logger.info("Checking room details for request: {}", request);
-
-        if (request == null || request.getRoomId() == null) {
-            logger.warn("Invalid room details request: missing roomId");
-            return ResponseEntity.badRequest().build();
-        }
-
+            @PathVariable String roomId) {
+        
+        logger.info("Checking room details for roomId: {}", roomId);
+        
         return ResponseEntity.ok(
-                guesserService.getRoomDetails(request));
+            guesserService.getRoomDetails(roomId)
+        );
     }
 }
