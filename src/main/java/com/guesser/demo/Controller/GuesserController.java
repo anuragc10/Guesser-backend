@@ -2,6 +2,8 @@ package com.guesser.demo.Controller;
 
 import com.guesser.demo.dto.*;
 import com.guesser.demo.service.GuesserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,11 +13,14 @@ import java.util.List;
 @RequestMapping("/api/guess")
 public class GuesserController {
 
+    private static final Logger logger = LoggerFactory.getLogger(GuesserController.class);
+
     @Autowired
     private GuesserService guesserService;
 
     @PostMapping("/start")
     public ResponseEntity<StartGuesserResponse> startNewGame(@RequestBody(required = false) StartGuesserRequest request) {
+        logger.info("Starting new game with request: {}", request);
         return ResponseEntity.ok(guesserService.startNewGame(request));
     }
 
@@ -37,7 +42,18 @@ public class GuesserController {
     }
 
     @PostMapping("/roomDetails")
-    public ResponseEntity<GameRoomResponse> getRoomDetails(@RequestBody(required = false) RoomDetailsRequest request) {
-        return ResponseEntity.ok(guesserService.getRoomDetails(request));
+    public ResponseEntity<GameRoomResponse> getRoomDetails(
+            @RequestBody(required = false) RoomDetailsRequest request) {
+
+        logger.info("Checking room details for request: {}", request);
+
+        if (request == null || request.getRoomId() == null) {
+            logger.warn("Invalid room details request: missing roomId");
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok(
+                guesserService.getRoomDetails(request.getRoomId())
+        );
     }
-} 
+}
