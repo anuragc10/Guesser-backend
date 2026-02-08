@@ -33,6 +33,15 @@ public class CorsConfig {
         // This is crucial for handling CORS on error responses (404, 400, etc.)
         FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>(new CorsFilter(source));
         bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        
+        // Ensure CORS filter applies to error dispatches as well
+        bean.setDispatcherTypes(java.util.EnumSet.of(
+            jakarta.servlet.DispatcherType.REQUEST,
+            jakarta.servlet.DispatcherType.FORWARD,
+            jakarta.servlet.DispatcherType.ERROR,
+            jakarta.servlet.DispatcherType.INCLUDE
+        ));
+        
         return bean;
     }
 }

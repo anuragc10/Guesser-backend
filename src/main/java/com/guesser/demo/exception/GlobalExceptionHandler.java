@@ -13,8 +13,11 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<ErrorResponse> handleResponseStatusException(ResponseStatusException ex) {
+        logger.error("ResponseStatusException: {}", ex.getMessage());
         ErrorResponse errorResponse = new ErrorResponse(
             ex.getReason(),
             ex.getStatusCode().value()
@@ -24,6 +27,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(GuesserException.class)
     public ResponseEntity<Map<String, Object>> handleGuesserException(GuesserException ex) {
+        logger.error("GuesserException: {} - {}", ex.getErrorCode().getCode(), ex.getMessage());
         Map<String, Object> response = new HashMap<>();
         response.put("errorCode", ex.getErrorCode().getCode());
         response.put("message", ex.getMessage());
@@ -34,6 +38,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGenericException(Exception ex) {
+        logger.error("Unhandled Exception: ", ex);
         Map<String, Object> response = new HashMap<>();
         response.put("errorCode", ErrorCodes.INTERNAL_SERVER_ERROR.getCode());
         response.put("message", ErrorCodes.INTERNAL_SERVER_ERROR.getMessage());

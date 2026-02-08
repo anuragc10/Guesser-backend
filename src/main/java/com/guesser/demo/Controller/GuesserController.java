@@ -11,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/guess")
-@CrossOrigin(originPatterns = "*", allowedHeaders = "*", allowCredentials = "true")
 public class GuesserController {
 
     private static final Logger logger = LoggerFactory.getLogger(GuesserController.class);
