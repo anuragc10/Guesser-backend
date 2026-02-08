@@ -53,7 +53,6 @@ public class GuesserController {
         }
 
         return ResponseEntity.ok(
-                guesserService.getRoomDetails(request.getRoomId())
-        );
+                guesserService.getRoomDetails(request));
     }
 }
