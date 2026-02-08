@@ -37,15 +37,7 @@ public class GuesserController {
     }
 
     @PostMapping("/roomDetails")
-    public ResponseEntity<GameRoomResponse> getRoomDetails(
-            @RequestBody(required = false) RoomDetailsRequest request) {
-
-        if (request == null || request.getRoomId() == null) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        return ResponseEntity.ok(
-                guesserService.getRoomDetails(request.getRoomId())
-        );
+    public ResponseEntity<GameRoomResponse> getRoomDetails(@RequestBody(required = false) RoomDetailsRequest request) {
+        return ResponseEntity.ok(guesserService.getRoomDetails(request));
     }
 } 
